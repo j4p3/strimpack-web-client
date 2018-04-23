@@ -156,6 +156,19 @@ class Chat extends Component {
   }
 
   send(message) {
+    if (!this.props.user) {
+      this.setState((prevState) => {
+        return {
+          input: '',
+          messages: prevState.messages.concat({
+            author: 'Admin',
+            userId: 0,
+            content: 'You must be logged in to send messages.',
+          })
+        };
+      });
+      return false;
+    }
     const data = {
       author: this.props.user.username,
       userId: this.props.user.id,
