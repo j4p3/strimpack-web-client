@@ -1,7 +1,8 @@
 {
   "name": "strimpack-web-client",
   "description": "react web client app for strimpack",
-  "version": "0.1.1",
+  "main": "index.js",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "react": "^16.3.2",
