@@ -1,0 +1,22 @@
+{
+  "name": "strimpack-web-client",
+  "description": "react web client app for strimpack",
+  "version": "0.1.1",
+  "private": true,
+  "dependencies": {
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
+    "react-scripts": "1.1.4",
+    "react-addons-update": "^15.6.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "watch": "nodemon --watch ./src --inspect=9229 --exec 'react-scripts build'",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  }
+}
