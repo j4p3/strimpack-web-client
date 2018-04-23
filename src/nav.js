@@ -5,6 +5,7 @@ import { UserContext } from './user';
 import './nav.css';
 
 // @todo: ConfigContext provider that reads from server env or config file?
+// or real redux
 const navItems = [{
   text: 'Donate',
   href: 'https://twitch.streamlabs.com/neuro'
@@ -16,30 +17,25 @@ const navItems = [{
   href: '/'
 }];
 
-const Login = (props) => {
-  return (
-    <a href='/auth'><li>Login</li></a>
-  )
-}
-
-const UserMenu = (props) => {
-  return (
-    <a href="/"><li>{props.username}</li></a>
-  )
-}
-
+// 
+// Expects properties:
+//    `text`
+//    `href` URL OR `onClick` function
+// 
 const NavItem = (props) => {
   return (<a href={`${props.href ? props.href : ''}`}
              onClick={props.onClick}>
              <li>{props.text}</li></a>)
 }
 
+const UserMenu = (props) => {
+  // @todo user-related dropdowns
+  return <NavItem href="/" text={props.username} />
+}
+
 // 
 // Expects properties:
-//  `items`
-//  item definition spreads into an <a>:
-//    `text`
-//    `href` URL OR `onClick` function
+//  `items` array
 // 
 class Nav extends Component {
   constructor(props) {
@@ -57,20 +53,20 @@ class Nav extends Component {
         <ul className="right">
         </ul>
         <ul className="right">
-          {this.props.items.map((item, i) =>  (<NavItem {...item} />) )}
+          {this.props.items.map((item, i) =>  (<NavItem key={i} {...item} />))}
           <ModalContext.Consumer>
             {(modalContext) => <NavItem
+              key='subscribe'
               text='Subscribe'
               action={modalContext.subscribe} />}
           </ModalContext.Consumer>
           <UserContext.Consumer>
             {(userContext) => {
               if (userContext.user) return (<UserMenu {...userContext.user}/>);
-              return (<Login />);
+              return (<NavItem href="/auth" text='Login' />);
             }}
           </UserContext.Consumer>
         </ul>
-          
       </nav>
     );
   }
