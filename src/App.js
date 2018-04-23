@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import update from 'react-addons-update';
 
 import { StreamScreen } from './stream';
-import Nav from './nav';
+import { Nav, navItems } from './nav';
 import { Modal, ModalContext, content } from './modal';
 import { UserContext, userState } from './user';
 import './app.css';
@@ -55,7 +55,7 @@ class App extends Component {
       <div className="root vertical container">
         <UserContext.Provider value={this.state.auth}>
         <ModalContext.Provider value={this.state.modal}>
-          <Nav />
+          <Nav items={navItems} />
           <StreamScreen />
           <Modal />
         </ModalContext.Provider>
