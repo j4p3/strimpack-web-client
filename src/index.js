@@ -18,6 +18,6 @@ if (window.__DATA__) {
 }
 
 ReactDOM.hydrate(<App user={user} />, document.getElementById('root'));
-// registerServiceWorker();
+registerServiceWorker();
 
-// @todo figure out how to export App and Render as top-level exports
+export { App };

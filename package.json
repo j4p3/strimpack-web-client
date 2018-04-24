@@ -2,8 +2,7 @@
   "name": "@j4p3/strimpack-web-client",
   "description": "react web client app for strimpack",
   "main": "index.js",
-  "version": "0.1.2",
-  "private": true,
+  "version": "0.2.0",
   "dependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
