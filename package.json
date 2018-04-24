@@ -1,5 +1,5 @@
 {
-  "name": "strimpack-web-client",
+  "name": "@j4p3/strimpack-web-client",
   "description": "react web client app for strimpack",
   "main": "index.js",
   "version": "0.1.2",
