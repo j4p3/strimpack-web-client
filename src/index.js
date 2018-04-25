@@ -18,6 +18,6 @@ if (window.__DATA__) {
 }
 
 ReactDOM.hydrate(<App user={user} />, document.getElementById('root'));
-registerServiceWorker();
+// registerServiceWorker();
 
 export { App };

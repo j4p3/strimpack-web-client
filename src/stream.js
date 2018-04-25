@@ -6,21 +6,22 @@ import './global.css';
 import './stream.css';
 
 export const Stream = (props) => {
-  return (
-    <h1>new content</h1>
-  )
-}
-/*
+  return (<h1>content</h1>)
+    /*
     <iframe
       title="stream"
       className="embedded"
-      src="//player.twitch.tv/?channel=neuro"
+      src="//player.twitch.tv/?channel=chess"
       marginHeight="0"
       marginWidth="0"
       frameBorder="0"
       scrolling="no">
     </iframe>
-*/
+    */
+}
+
+    
+
 
 export const StreamScreen = (props) => {
   return (

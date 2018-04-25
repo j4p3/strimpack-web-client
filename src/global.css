@@ -11,6 +11,10 @@
   color: #bb6125;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 959px) {
   .container {
     flex-direction: row;

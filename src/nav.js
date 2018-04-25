@@ -5,6 +5,7 @@ import { UserContext } from './user';
 import './nav.css';
 
 // @todo: ConfigContext provider that reads from server env or config file?
+// menu items, color scheme, logo file, etc
 // or real redux
 const navItems = [{
   text: 'Donate',
@@ -23,9 +24,15 @@ const navItems = [{
 //    `href` URL OR `onClick` function
 // 
 const NavItem = (props) => {
-  return (<a href={`${props.href ? props.href : ''}`}
-             onClick={props.onClick}>
-             <li>{props.text}</li></a>)
+  let content;
+  if (props.href) {  
+    content = (<a {...props}>{props.text}</a>)
+  } else if (props.onClick) {
+    content = (<span {...props} className='pointer'>{props.text}</span>)
+  } else {
+    content = (<span {...props}>{props.text}</span>)
+  }
+  return (<li>{content}</li>)
 }
 
 const UserMenu = (props) => {
@@ -46,11 +53,8 @@ class Nav extends Component {
   render() {
     return (
       <nav>
-        <ul className="left">
-          <a className="logo-wrap" href="#"><li className="logo"></li></a>
-          <a className="title" href="#"><li><span className="accent">Title</span></li></a>
-        </ul>
-        <ul className="right">
+        <ul className="left header">
+          <NavItem className='title accent pointer' text='Title' />
         </ul>
         <ul className="right">
           {this.props.items.map((item, i) =>  (<NavItem key={i} {...item} />))}
@@ -58,7 +62,7 @@ class Nav extends Component {
             {(modalContext) => <NavItem
               key='subscribe'
               text='Subscribe'
-              action={modalContext.subscribe} />}
+              onClick={modalContext.subscribe} />}
           </ModalContext.Consumer>
           <UserContext.Consumer>
             {(userContext) => {

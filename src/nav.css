@@ -7,9 +7,9 @@ nav {
 }
 
 nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 nav ul.left {
   float: left;
@@ -19,37 +19,31 @@ nav ul.right {
 }
 
 nav li {
+  display: inline-block;
+}
+
+nav li a, nav li span {
+  display: block;
   height: 50px;
   line-height: 50px;
   min-width: 150px;
-  text-align: center;
+  border-left: 1px solid #444;
 
+  font-size: 16px;
+  text-align: center;
   color: #fff;
-}
-nav a {
-  display: inline-block;
   text-decoration: none;
-  border-right: 1px solid #444;
-  border-bottom: 0;
 }
-nav a::first-child {
+nav ul li::first-child {
   border-left: 1px solid #444;
 }
-nav .title, .logo-wrap {
-  border: 0 !important;
-  height: 46px;
-  display: inline-block;
-}
 
-nav .title {
-  max-height: 20px;
-  position: relative;
-  top: -12px;
-  font-size: 18pt;
+nav .header li a, nav .header li span {
+  border: 0;
 }
 
 nav .logo {
-  min-width: 50px;
+  min-width: 51px;
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
