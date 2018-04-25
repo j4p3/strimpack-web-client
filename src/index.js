@@ -12,12 +12,14 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-let user;
+let data;
 if (window.__DATA__) {
-  user = JSON.parse(window.__DATA__)
+  data = JSON.parse(window.__DATA__)
 }
 
-ReactDOM.hydrate(<App user={user} />, document.getElementById('root'));
+if (data) {
+  ReactDOM.hydrate(<App user={data.user} config={data.config} />, document.getElementById('root'));
+} else {
+  ReactDOM.render(<App />, document.getElementById('root'));
+}
 // registerServiceWorker();
-
-export { App };

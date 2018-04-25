@@ -2,21 +2,8 @@ import React, { Component } from 'react';
 
 import { ModalContext } from './modal';
 import { UserContext } from './user';
+import { ConfigContext } from './config';
 import './nav.css';
-
-// @todo: ConfigContext provider that reads from server env or config file?
-// menu items, color scheme, logo file, etc
-// or real redux
-const navItems = [{
-  text: 'Donate',
-  href: 'https://twitch.streamlabs.com/neuro'
-}, {
-  text: 'Become a Patron',
-  href: 'https://www.patreon.com/NeuroZerg'
-}, {
-  text: 'Forums',
-  href: '/'
-}];
 
 // 
 // Expects properties:
@@ -35,9 +22,13 @@ const NavItem = (props) => {
   return (<li>{content}</li>)
 }
 
+const NavList = (props) => {
+  return props.items.map((item, i) => (<NavItem key={i} {...item} />));
+}
+
 const UserMenu = (props) => {
   // @todo user-related dropdowns
-  return <NavItem href="/" text={props.username} />
+  return <NavItem href='/' text={props.username} />
 }
 
 // 
@@ -53,27 +44,32 @@ class Nav extends Component {
   render() {
     return (
       <nav>
-        <ul className="left header">
+        <ul className='left header'>
           <NavItem className='title accent pointer' text='Title' />
         </ul>
-        <ul className="right">
-          {this.props.items.map((item, i) =>  (<NavItem key={i} {...item} />))}
-          <ModalContext.Consumer>
-            {(modalContext) => <NavItem
-              key='subscribe'
-              text='Subscribe'
-              onClick={modalContext.subscribe} />}
-          </ModalContext.Consumer>
-          <UserContext.Consumer>
-            {(userContext) => {
-              if (userContext.user) return (<UserMenu {...userContext.user}/>);
-              return (<NavItem href="/auth" text='Login' />);
-            }}
-          </UserContext.Consumer>
-        </ul>
+          <ConfigContext.Consumer>
+            {(configContext) => (
+            <ul className='right'>
+              <NavList items={configContext.navItems} />
+              <ModalContext.Consumer>
+                {(modalContext) => <NavItem
+                  key='subscribe'
+                  text='Subscribe'
+                  onClick={modalContext.subscribe} />}
+              </ModalContext.Consumer>
+              <UserContext.Consumer>
+                {(userContext) => {
+                  if (userContext.user) {
+                    return (<UserMenu {...userContext.user}/>)
+                  }
+                  return (<NavItem href='/auth' text='Login' />);
+                }}
+              </UserContext.Consumer>
+            </ul>)}
+          </ConfigContext.Consumer>
       </nav>
     );
   }
 }
 
-export { Nav, navItems };
+export { Nav };

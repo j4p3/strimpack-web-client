@@ -1,30 +1,37 @@
 import React from 'react';
+import StripeCheckout from 'react-stripe-checkout';
+
+import { ConfigContext } from './config';
 import './modal.css';
+import './global.css';
 
 const content = {
-  hi: {
-    title: 'Foo',
-    main: (<p>Hi</p>),
-    footer: 'Baz'
-  },
   subscribe: {
-    title: 'Foo',
-    main: (<p>Subscribe</p>),
-    footer: 'Baz'
+    title: 'Subscribe',
+    main: (config) => (<div>
+      <p>Support the stream by purchasing a monthly subscription.</p>
+        <div className='container'>
+        {(config.subscriptionTiers.map((tier, i) => {
+          return (<div className='item'>
+            <StripeCheckout
+              key={i}
+              name={config.title}
+              description={`Monthly subscription to ${config.title}`}
+              image={config.logo}
+              panelLabel={'SUBSCRIBE'}
+              token={() => console.log('token @todo subscription creation endpoint')}
+              stripeKey='pk_test_L8vQdW3ODhXGRdYYcNRZh7Ek' >
+              <button className="stylish-button">{tier.description} (${tier.cost})</button>
+              </StripeCheckout>
+            </div>)
+        }))}
+        </div>
+      </div>),
+    footer: ''
   },
-  signup: {
-    title: 'Foo',
-    main: (<p>Signup</p>),
-    footer: 'Baz'
-  },
-  login: {
-    title: 'Foo',
-    main: (<p>Login</p>),
-    footer: 'Baz'
-  }
 };
 
-const ModalContext = React.createContext({ mode: content.hi });
+const ModalContext = React.createContext({ mode: content.subscribe });
 
 const ModalContent = (props) => {
   return (
@@ -33,14 +40,15 @@ const ModalContent = (props) => {
             onClick={props.close}></div>
       <div className="content">
         <header>
-          <p>{props.content.title}</p>
-          <button className="close"
-            onClick={props.close}>
-            Close
-          </button>
+          <span className="title">{props.content.title}</span>
+          <span className="close">
+            <button onClick={props.close}>✖</button>
+          </span>
         </header>
         <section>
-          {props.content.main}
+          <ConfigContext.Consumer>
+            {(configContext) => props.content.main(configContext)}
+          </ConfigContext.Consumer>
         </section>
         <footer>
           <p>{props.content.footer}</p>

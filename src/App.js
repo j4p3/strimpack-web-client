@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import update from 'react-addons-update';
 
 import { StreamScreen } from './stream';
-import { Nav, navItems } from './nav';
+import { Nav } from './nav';
 import { Modal, ModalContext, content } from './modal';
 import { UserContext, userState } from './user';
+import { ConfigContext, configState } from './config';
 import './app.css';
 
 // @todo expose this component as a module-level export
@@ -16,10 +17,12 @@ class App extends Component {
 
     // 
     // Context transformer methods
-    // tfw you accidentally roll your own redux
     // 
 
-    this.close = () => {
+    const user = props.user || userState.user;
+    const config = { ...configState, ...props.config };
+
+    this.modalClose = () => {
       this.setState((state) => {
         return update(state, {
           modal: { visible: { $set: false } }
@@ -27,7 +30,7 @@ class App extends Component {
       });
     };
 
-    this.subscribe = () => {
+    this.modalSubscribe = () => {
       this.setState((state) => {
           return update(state, { modal: {
             visible: { $set: true },
@@ -36,30 +39,42 @@ class App extends Component {
       });
     };
 
+    this.modalCheckout = () => {
+      this.setState((state) => {
+          return update(state, { modal: {
+            visible: { $set: true },
+            stripe: { $set: true }}
+        });
+      });
+    };
+
     this.state = {
       modal: {
-        content: content.hi,
+        content: content.subscribe,
         visible: false,
-        hi: this.hi,
-        subscribe: this.subscribe,
-        close: this.close
+        subscribe: this.modalSubscribe,
+        close: this.modalClose,
+        checkout: this.modalCheckout,
       },
       auth: {
-        user: props.user,
-      }
+        user: user,
+      },
+      config: config
     };
   }
 
   render() {
     return (
       <div className="root vertical container">
+        <ConfigContext.Provider value={this.state.config}>
         <UserContext.Provider value={this.state.auth}>
         <ModalContext.Provider value={this.state.modal}>
-          <Nav items={navItems} />
+          <Nav />
           <StreamScreen />
           <Modal />
         </ModalContext.Provider>
         </UserContext.Provider>
+        </ConfigContext.Provider>
       </div>
     );
   }

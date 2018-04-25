@@ -5,9 +5,10 @@
   "version": "0.2.0",
   "dependencies": {
     "react": "^16.3.2",
+    "react-addons-update": "^15.6.2",
     "react-dom": "^16.3.2",
     "react-scripts": "1.1.4",
-    "react-addons-update": "^15.6.2"
+    "react-stripe-checkout": "^2.6.3"
   },
   "scripts": {
     "start": "react-scripts start",

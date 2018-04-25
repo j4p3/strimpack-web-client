@@ -7,12 +7,34 @@
   flex-direction: column;
 }
 
+.item {
+  flex: 1;
+}
+
 .accent {
   color: #bb6125;
 }
 
 .pointer {
   cursor: pointer;
+}
+
+.stylish-button {
+    height: 2em;
+    padding: .5em 1em;
+    margin: 0;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+
+    font-size: 16px;
+    color: #fff;
+    background: #e49f70;
+    background: linear-gradient(135deg, #e28140 0%,#bb6125 50%,#bb6125 100%);
+}
+
+.stylish-button:hover {
+  background: #e28140; 
 }
 
 @media screen and (min-width: 959px) {
