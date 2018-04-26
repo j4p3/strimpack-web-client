@@ -35,40 +35,38 @@ const UserMenu = (props) => {
 // Expects properties:
 //  `items` array
 // 
+// @todo prevent subscription if not logged in
 class Nav extends Component {
-  constructor(props) {
-    super(props);
-  
-    this.state = {};
-  }
   render() {
-    return (
-      <nav>
-        <ul className='left header'>
-          <NavItem className='title accent pointer' text='Title' />
-        </ul>
-          <ConfigContext.Consumer>
-            {(configContext) => (
-            <ul className='right'>
-              <NavList items={configContext.navItems} />
-              <ModalContext.Consumer>
-                {(modalContext) => <NavItem
-                  key='subscribe'
-                  text='Subscribe'
-                  onClick={modalContext.subscribe} />}
-              </ModalContext.Consumer>
-              <UserContext.Consumer>
-                {(userContext) => {
-                  if (userContext.user) {
-                    return (<UserMenu {...userContext.user}/>)
-                  }
-                  return (<NavItem href='/auth' text='Login' />);
-                }}
-              </UserContext.Consumer>
-            </ul>)}
-          </ConfigContext.Consumer>
-      </nav>
-    );
+    return (<ConfigContext.Consumer>
+      {(configContext) => (
+            <nav>
+              <ul className='left header'>
+                <li className='logo pointer' style={{backgroundImage: `url('${configContext.logo}')`}}>
+                </li>
+                <li className='title'>
+                  <span className='accent pointer'>{configContext.title}</span>
+                </li>
+              </ul>
+              <ul className='right'>
+                <NavList items={configContext.navItems} />
+                <ModalContext.Consumer>
+                  {(modalContext) => <NavItem
+                    key='subscribe'
+                    text='Subscribe'
+                    onClick={modalContext.subscribe} />}
+                </ModalContext.Consumer>
+                <UserContext.Consumer>
+                  {(userContext) => {
+                    if (userContext.user) {
+                      return (<UserMenu {...userContext.user}/>)
+                    }
+                    return (<NavItem href='/auth' text='Login' />);
+                  }}
+                </UserContext.Consumer>
+              </ul>
+            </nav>)}
+    </ConfigContext.Consumer>);
   }
 }
 

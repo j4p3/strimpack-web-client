@@ -18,7 +18,7 @@ if (window.__DATA__) {
 }
 
 if (data) {
-  ReactDOM.hydrate(<App user={data.user} config={data.config} />, document.getElementById('root'));
+  ReactDOM.hydrate(<App user={data.user} stream={data.stream} />, document.getElementById('root'));
 } else {
   ReactDOM.render(<App />, document.getElementById('root'));
 }

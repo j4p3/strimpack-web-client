@@ -20,7 +20,7 @@ class App extends Component {
     // 
 
     const user = props.user || userState.user;
-    const config = { ...configState, ...props.config };
+    const stream = { ...configState, ...props.stream };
 
     this.modalClose = () => {
       this.setState((state) => {
@@ -39,11 +39,20 @@ class App extends Component {
       });
     };
 
-    this.modalCheckout = () => {
+    this.modalCompleteSubscription = () => {
       this.setState((state) => {
           return update(state, { modal: {
             visible: { $set: true },
-            stripe: { $set: true }}
+            content: { $set: content.subscribed }}
+        });
+      });
+    };
+
+    this.modalLoad = () => {
+      this.setState((state) => {
+          return update(state, { modal: {
+            visible: { $set: true },
+            content: { $set: content.loading }}
         });
       });
     };
@@ -54,12 +63,13 @@ class App extends Component {
         visible: false,
         subscribe: this.modalSubscribe,
         close: this.modalClose,
-        checkout: this.modalCheckout,
+        completeSubscription: this.modalCompleteSubscription,
+        load: this.modalLoad,
       },
       auth: {
         user: user,
       },
-      config: config
+      config: stream
     };
   }
 

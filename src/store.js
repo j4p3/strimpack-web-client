@@ -4,11 +4,9 @@ let port = '8082';
 
 class Store {
   constructor(props) {
-    if ('callback' in props) {
+    if (props && props.hasOwnProperty('callback')) {
       this.callback = props.callback;
       this.context = props.context;
-    } else {
-      return Error('Error: no callback in props')
     }
     this.socket = new WebSocket(`ws://${host}:${port}`)
     this.socket.onmessage = (evt) => this.receive(this.process(evt));
@@ -31,6 +29,20 @@ class Store {
 
   broadcast(data) {
     this.socket.send(JSON.stringify(data));
+  }
+
+  async subscribe(data) {
+    const res = await fetch('/subscribe', {
+      body: JSON.stringify(data),
+      headers: { 'content-type': 'application/json' },
+      method: 'POST',
+      credentials: 'same-origin',
+    });
+
+    if (!res.ok) return false;
+
+    const resData = res.json();
+    return resData;
   }
 }
 

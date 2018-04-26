@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 
+import Store from './store';
 import { ConfigContext } from './config';
 import './modal.css';
 import './global.css';
 
 const content = {
+  loading: {
+    title: 'Waiting...',
+    main: (config) => {
+      <p>Waiting...</p>
+    },
+    footer: ''
+  },
+  subscribed: {
+    title: 'Subscription Completed!',
+    main: (config) => (<p>You've successfully purchased a subscription to {config.title}.</p>),
+    footer: 'Thanks!'
+  },
   subscribe: {
     title: 'Subscribe',
     main: (config) => (<div>
@@ -19,9 +32,16 @@ const content = {
               description={`Monthly subscription to ${config.title}`}
               image={config.logo}
               panelLabel={'SUBSCRIBE'}
-              token={() => console.log('token @todo subscription creation endpoint')}
-              stripeKey='pk_test_L8vQdW3ODhXGRdYYcNRZh7Ek' >
-              <button className="stylish-button">{tier.description} (${tier.cost})</button>
+              token={(token) => {
+                config.load();
+                config.subscribe({ tier: tier, token: token}).then((res) => {
+                  // this would be a nice place for redux - update the user tier from here
+                  console.log(config);
+                  config.complete();
+                });
+              }}
+              stripeKey={config.stripeKey}>
+              <button className="stylish-button">{tier.title} (${tier.cost/100})</button>
               </StripeCheckout>
             </div>)
         }))}
@@ -47,7 +67,12 @@ const ModalContent = (props) => {
         </header>
         <section>
           <ConfigContext.Consumer>
-            {(configContext) => props.content.main(configContext)}
+            {(configContext) => props.content.main({
+              ...configContext,
+              subscribe: props.store.subscribe,
+              close: props.close,
+              load: props.load,
+              complete: props.completeSubscription })}
           </ConfigContext.Consumer>
         </section>
         <footer>
@@ -58,18 +83,27 @@ const ModalContent = (props) => {
   )
 }
 
-const Modal = (props) => {
-  return (
-    <ModalContext.Consumer>
-      {(context) => {
-        if (context.visible) return (
-          <ModalContent
-            {...props}
-            {...context} />
-        )
-      }}
-    </ModalContext.Consumer>
-  )
+class Modal extends Component {
+  constructor(props) {
+    super(props);
+    this.store = new Store();
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <ModalContext.Consumer>
+        {(context) => {
+          if (context.visible) return (
+            <ModalContent
+              {...this.props}
+              {...context}
+              store={this.store} />
+          )
+        }}
+      </ModalContext.Consumer>
+    )
+  }
 }
 
 export { Modal, ModalContext, content };

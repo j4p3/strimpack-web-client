@@ -12,7 +12,7 @@
 }
 
 .accent {
-  color: #bb6125;
+  color: #fc4a1a;
 }
 
 .pointer {
@@ -29,12 +29,11 @@
 
     font-size: 16px;
     color: #fff;
-    background: #e49f70;
-    background: linear-gradient(135deg, #e28140 0%,#bb6125 50%,#bb6125 100%);
+    background: linear-gradient(135deg, #f78433 0%, #fc4a1a 50%, #fc4a1a 100%);
 }
 
 .stylish-button:hover {
-  background: #e28140; 
+  background: #fc4a1a; 
 }
 
 @media screen and (min-width: 959px) {

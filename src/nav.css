@@ -34,19 +34,24 @@ nav li a, nav li span {
   color: #fff;
   text-decoration: none;
 }
-nav ul li::first-child {
-  border-left: 1px solid #444;
-}
 
 nav .header li a, nav .header li span {
   border: 0;
 }
 
 nav .logo {
-  min-width: 51px;
+  width: 50px;
+  height: 45px;
+  margin-top: 5px;
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
+}
+
+nav .title {
+  position: absolute;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 @media screen and (min-width: 959px) {
