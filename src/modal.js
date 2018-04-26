@@ -84,10 +84,8 @@ const ModalContent = (props) => {
 }
 
 class Modal extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
     this.store = new Store();
-    this.state = {};
   }
 
   render() {

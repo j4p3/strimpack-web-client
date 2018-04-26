@@ -7,9 +7,9 @@ class Store {
     if (props && props.hasOwnProperty('callback')) {
       this.callback = props.callback;
       this.context = props.context;
+      this.socket = new WebSocket(`ws://${host}:${port}`)
+      this.socket.onmessage = (evt) => this.receive(this.process(evt));
     }
-    this.socket = new WebSocket(`ws://${host}:${port}`)
-    this.socket.onmessage = (evt) => this.receive(this.process(evt));
   }
 
   process(evt) {
