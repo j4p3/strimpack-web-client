@@ -1,14 +1,14 @@
 
 import { configState } from './config';
 
-const CHAT_HOST = configState.chatServer;
+const CHAT_HOST = `ws://chat.${configState.host}`;
 
 class Store {
   constructor(props) {
     if (props && props.hasOwnProperty('callback')) {
       this.callback = props.callback;
       this.context = props.context;
-      this.socket = new WebSocket(`ws://${CHAT_HOST}`)
+      this.socket = new WebSocket(`${CHAT_HOST}`)
       this.socket.onmessage = (evt) => this.receive(this.process(evt));
     }
   }
