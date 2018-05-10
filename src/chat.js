@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+import { ConfigContext } from './config';
 import Store from './store';
 import './global.css'
 import './chat.css'
@@ -49,13 +50,14 @@ class MessageInput extends Component {
   }
 
   render() {
-    return (
+    return (<ConfigContext.Consumer>{(configContext) => (
       <textarea type="text"
+                style={{border: `1px solid ${configContext.themeColor}`}}
                 ref={this.el}
                 value={this.state.value}
                 onKeyDown={this.handleKey}
                 onChange={this.handleInput} />
-    );
+    )}</ConfigContext.Consumer>);
   }
 }
 

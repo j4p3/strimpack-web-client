@@ -45,7 +45,7 @@ class Nav extends Component {
                 <li className='logo pointer' style={{backgroundImage: `url('${configContext.logo}')`}}>
                 </li>
                 <li className='title'>
-                  <span className='accent pointer'>{configContext.title}</span>
+                  <span className='pointer' style={{ color: configContext.themeColor }}>{configContext.title}</span>
                 </li>
               </ul>
               <ul className='right'>
