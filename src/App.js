@@ -8,9 +8,6 @@ import { UserContext, userState } from './user';
 import { ConfigContext, configState } from './config';
 import './app.css';
 
-// @todo expose this component as a module-level export
-// extract clientside stuff to separate repo
-// require in serverside package & import it there
 class App extends Component {
   constructor(props) {
     super(props);

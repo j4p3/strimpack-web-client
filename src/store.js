@@ -1,13 +1,14 @@
 
-let host = '127.0.0.1';
-let port = '8082';
+import { configState } from './config';
+
+const CHAT_HOST = configState.chatServer;
 
 class Store {
   constructor(props) {
     if (props && props.hasOwnProperty('callback')) {
       this.callback = props.callback;
       this.context = props.context;
-      this.socket = new WebSocket(`ws://${host}:${port}`)
+      this.socket = new WebSocket(`ws://${CHAT_HOST}`)
       this.socket.onmessage = (evt) => this.receive(this.process(evt));
     }
   }
