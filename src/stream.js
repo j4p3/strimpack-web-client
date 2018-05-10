@@ -33,9 +33,11 @@ export const StreamScreen = (props) => {
           </ConfigContext.Consumer>
         </main>
         <aside className="chat"><div className="inner">
-          <UserContext.Consumer>
-            {context => <Chat user={context.user} />}
-          </UserContext.Consumer>
+          <ConfigContext.Consumer>{(config) => (
+            <UserContext.Consumer>
+              {context => <Chat user={context.user} config={config} />}
+            </UserContext.Consumer>
+          )}</ConfigContext.Consumer>
         </div></aside>
       </section>
   );

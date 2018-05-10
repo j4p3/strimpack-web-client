@@ -127,8 +127,9 @@ class Chat extends Component {
 
   componentDidMount() {
     this.store = new Store({
+      host: this.props.config.host,
       callback: this.handleData,
-      context: this
+      context: this,
     });
   }
 
